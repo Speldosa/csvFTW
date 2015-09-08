@@ -1,10 +1,10 @@
 # Name
 
-csvMagic
+csvFTW
 
 # Version
 
-alpha 0.2 (released 2015-08-29)
+alpha 0.3 (released 2015-09-08)
 
 # Author
 
@@ -35,12 +35,17 @@ with all the files you want to use placed in the same directory as `csvMagic.py`
 In your modify file, you mark the columns that you want the program to look at by a letter and then the `@` symbol, followed by the column name in the input file. Currently, there are two commands that you can use:
 
 - `v@` - **Vertabim check:** Makes the program check to see if the cells in this column match with the cells in the input file.
-- `i@` - **Integer check:** Makes the program check to see if the cells in this column match with the cells in the input file. This markup only deals with integers and a special syntax can be used to look for several of them in one fell swoop. First, elements can be separated by commas, like so: `x,y`. Further, each element can be a range between two numbers (with the smaller one specified first). For example, `1-5` would be the same thing as writing `1,2,3,4,5`. An example of a integer check could then be `1-3,5-8,10` which would match with all numbers between 1 and 10 except for 4 and 9.
+- `i@` - **Integer check:** Makes the program check to see if the cells in this column match with the cells in the input file. This markup only deals with integers and a special syntax can be used to look for several of them in one fell swoop. First, elements can be separated by commas, like so: `x,y`. Further, each element can be a range between two numbers (with the smaller one specified first). For example, `1-5` would be the same thing as writing `1,2,3,4,5`. An example of a integer check could then be `1-3,5-8,10` which would match with all numbers between 1 and 10 except for 4 and 9. In addition, using a `*` (not applicable in the range option) means that any number passes.
 - `m@` - **Modify:** Tells the program that these are the columns that you want to change if it finds a match. If the columns doesn't exist, it will be added in the output data, given that data is written to it.
 
 The program will, for each row in the modify file, first look at all the `v@` tags. If all the cells in a row of the modify file where the column name is marked with `v@` match with all the cells for those column names in the input data, the program will look in the modify file for columns tagged with `m@`. For all these, the content of the cells in the modify will replace whatever is present in the input file, or add a new column with the name specified after the `@` sign.
 
 # Change log
+
+## alpha 0.3 (released 2015-09-08)
+- Changed the name from `csvMagic` to `csvFTW`.
+- Added the star option to `i@` (integer).
+- Fixed some bugs.
 
 ## alpha 0.2 (released 2015-08-29)
 - Changed the `c@` (change) syntax to `m@` (modify).

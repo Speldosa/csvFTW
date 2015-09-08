@@ -37,12 +37,14 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 					if currentCellElements[b]:
 						if currentCellElements[b] == data.input_data[input_row][a]:
 							return(True)
+						elif currentCellElements[b] == "*":
+							return(True)
 						elif "-" in currentCellElements[b]:
 							current_cell_element_range = currentCellElements[b].split("-")
 							if len(current_cell_element_range) == 2:
 								try:
 									if int(current_cell_element_range[0]) < int(current_cell_element_range[1]):
-										for c in range(int(current_cell_element_range[0]),int(current_cell_element_range[1])):
+										for c in range(int(current_cell_element_range[0]),int(current_cell_element_range[1])+1):
 											if c == int(data.input_data[input_row][a]):
 												return(True)
 								except:
@@ -54,12 +56,12 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 		return(False)
 	raise Exception('No known markup.')
 
-def list_key_columns(list_of_column_names, key_string, data):
+def list_key_columns(list_of_column_names, key_string):
 	white_list = []
 	for a in range(0, len(list_of_column_names)):
-		current_cell = data[0][a]
-		if len(current_cell) >= len(key_string):
-			if current_cell[:len(key_string)] == key_string:
+		current_column = list_of_column_names[a]
+		if len(current_column) >= len(key_string):
+			if current_column[:len(key_string)] == key_string:
 				white_list.append(a)
 	return(white_list)
 
@@ -79,9 +81,9 @@ def print_ignored_columns_message(data):
 		print(Message_to_print)
 
 def print_startup_message(data,rules):
-	print("************************************")
-	print("*** csvmagic, alpha version 0.2. ***")
-	print("************************************")
+	print("**********************************")
+	print("*** csvFTW, alpha version 0.3. ***")
+	print("**********************************")
 	print("Input file: " + data.input_file)
 	print("Modify file: " + data.modify_file)
 	print("Output file: " + data.output_file)
@@ -161,10 +163,10 @@ class Data:
 		self.output_data_header_columns = self.input_data_header_columns
 
 		# Create variables
-		self.modify_data_vertabim_columns = list_key_columns(self.modify_data_header_columns, "v@", self.modify_data)
-		self.modify_data_integer_columns = list_key_columns(self.modify_data_header_columns, "i@", self.modify_data)
+		self.modify_data_vertabim_columns = list_key_columns(self.modify_data_header_columns, "v@")
+		self.modify_data_integer_columns = list_key_columns(self.modify_data_header_columns, "i@")
 		self.modify_data_check_columns = self.modify_data_vertabim_columns + self.modify_data_integer_columns
-		self.modify_data_change_columns = list_key_columns(self.modify_data_header_columns, "m@", self.modify_data)
+		self.modify_data_change_columns = list_key_columns(self.modify_data_header_columns, "m@")
 		self.modify_data_marked_columns = self.modify_data_check_columns + self.modify_data_change_columns
 		self.modify_data_all_columns = create_number_list(self.modify_data_header_columns)
 		self.modify_data_non_marked_columns = [item for item in self.modify_data_all_columns if item not in self.modify_data_marked_columns]

@@ -10,7 +10,7 @@ alpha 0.3 (released 2015-09-08)
 
 - Martin Larsson
 	- E-mail: [to.martin.larsson@gmail.com](to.martin.larsson@gmail.com)
-	- Homepage: [www.martinlarsson.net](www.martinlarsson.net)
+	- Homepage: [www.martinlarsson.net](http://www.martinlarsson.net)
 
 # License type
 

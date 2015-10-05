@@ -22,15 +22,19 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 					elif data.modify_data[modify_row][modify_column] == rules.empty_designator:
 						if data.input_data[input_row][a] == "":
 							return(True)
+				else:
+					return(True)
 		return(False)
 	elif check_column_markup == 'i@':
+		if not data.modify_data[modify_row][modify_column]:
+			return(True)
 		currentCell = data.modify_data[modify_row][modify_column]
 		if ',' in currentCell:
 			currentCellElements = currentCell.split(",")
 			for a in range(0,len(currentCellElements)):
 				currentCellElements[a].replace(" ", "")
 		else:
-			currentCellElements = [currentCell]
+			currentCellElements = currentCell
 		for a in range(0,len(data.input_data_header_columns)):
 			if check_column_name == data.input_data_header_columns[a]:
 				for b in range(0,len(currentCellElements)):
@@ -82,7 +86,7 @@ def print_ignored_columns_message(data):
 
 def print_startup_message(data,rules):
 	print("**********************************")
-	print("*** csvFTW, alpha version 0.3. ***")
+	print("*** csvFTW, alpha version 0.4. ***")
 	print("**********************************")
 	print("Input file: " + data.input_file)
 	print("Modify file: " + data.modify_file)
@@ -232,11 +236,7 @@ class Checks:
 		else:
 			if not found_a_modify_hit:
 				self.multiple_modifications[2][write_to_row].append(modify_row)
-						
-### Session ###
-class Session:
-	def test():
-		print("Session.test()")
+
 		
 #############################
 ## 3. Object instantiation ##
@@ -245,7 +245,6 @@ class Session:
 rules = Rules(sys.argv[4],2,"<empty>")
 data = Data(sys.argv[1],sys.argv[2],sys.argv[3],rules)
 checks = Checks()
-session = Session()
 
 
 ####################

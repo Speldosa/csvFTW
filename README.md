@@ -4,7 +4,7 @@ csvFTW
 
 # Version
 
-alpha 0.3 (released 2015-09-08)
+alpha 0.4 (released 2015-10-05)
 
 # Author
 
@@ -41,6 +41,9 @@ In your modify file, you mark the columns that you want the program to look at b
 The program will, for each row in the modify file, first look at all the `v@` tags. If all the cells in a row of the modify file where the column name is marked with `v@` match with all the cells for those column names in the input data, the program will look in the modify file for columns tagged with `m@`. For all these, the content of the cells in the modify will replace whatever is present in the input file, or add a new column with the name specified after the `@` sign.
 
 # Change log
+
+## alpha 0.4 (released 2015-10-05)
+- Fixed some bugs.
 
 ## alpha 0.3 (released 2015-09-08)
 - Changed the name from `csvMagic` to `csvFTW`.

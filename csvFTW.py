@@ -34,7 +34,7 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 			for a in range(0,len(currentCellElements)):
 				currentCellElements[a].replace(" ", "")
 		else:
-			currentCellElements = currentCell
+			currentCellElements = [currentCell]
 		for a in range(0,len(data.input_data_header_columns)):
 			if check_column_name == data.input_data_header_columns[a]:
 				for b in range(0,len(currentCellElements)):
@@ -86,10 +86,10 @@ def print_ignored_columns_message(data):
 
 def print_startup_message(data,rules):
 	print("**********************************")
-	print("*** csvFTW, alpha version 0.4. ***")
+	print("*** csvFTW, alpha version 0.5. ***")
 	print("**********************************")
 	print("Input file: " + data.input_file)
-	print("Modify file: " + data.modify_file)
+	print("Instruction file: " + data.modify_file)
 	print("Output file: " + data.output_file)
 	print("Delimiter: " + rules.delimiter)
 
@@ -141,7 +141,8 @@ def print_non_existent_check_columns(data):
 
 ### Rules ###
 class Rules:
-	def __init__(self,delimiter,key_designator_lenght,empty_designator):
+	def __init__(self,mode,delimiter,key_designator_lenght,empty_designator):
+		self.mode = mode
 		self.delimiter = delimiter
 		self.key_designator_lenght = key_designator_lenght
 		self.empty_designator = empty_designator
@@ -152,6 +153,7 @@ class Data:
 		self.input_file = input_file
 		self.modify_file = modify_file
 		self.output_file = output_file
+		self.remove_rows = []
 		# Import Input data.
 		with open(self.input_file, 'r') as csvfile:
 			self.input_data = list(csv.reader(csvfile, delimiter=rules.delimiter))
@@ -207,6 +209,18 @@ class Data:
 			self.output_data[a].append("")
 		return(input)
 
+	def register_remove_output(self, remove_rows):
+		self.remove_rows.append(remove_rows)
+
+	def remove_output(self):
+		if(len(self.remove_rows) >= 1):
+			self.output_data = [self.input_data_header_columns]
+			for a in range(1,len(self.input_data)):
+				if a not in self.remove_rows:
+					self.output_data.append(self.input_data[a])
+					
+				
+
 ### Checks ###
 class Checks:
 	new_columns_created = []
@@ -242,8 +256,8 @@ class Checks:
 ## 3. Object instantiation ##
 #############################
 
-rules = Rules(sys.argv[4],2,"<empty>")
-data = Data(sys.argv[1],sys.argv[2],sys.argv[3],rules)
+rules = Rules(sys.argv[1],sys.argv[5],2,"<empty>")
+data = Data(sys.argv[2],sys.argv[3],sys.argv[4],rules)
 checks = Checks()
 
 
@@ -266,7 +280,10 @@ for a in range(1,len(data.modify_data)):
 			if check_for_match(a,data.modify_data_check_columns[c],check_column_name,check_column_markup,b,data):
 				if c == (len(data.modify_data_check_columns) - 1):
 					modify_at_least_one_hit_for_modify_row = True
-					data.modify_output(b,a,rules,checks)
+					if rules.mode == 'modify':
+						data.modify_output(b,a,rules,checks)
+					elif rules.mode == 'delete':
+						data.register_remove_output(b)
 			else:
 				break
 	if not modify_at_least_one_hit_for_modify_row:
@@ -282,6 +299,9 @@ print_several_modifications(checks)
 print("")
 
 # Write Output to file
+print(data.output_data)
+data.remove_output()
+print(data.output_data)
 with open(data.output_file, 'w') as file:
 	File_writer = csv.writer(file, delimiter=rules.delimiter, quoting=csv.QUOTE_ALL)
 	File_writer.writerows(data.output_data)

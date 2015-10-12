@@ -299,9 +299,7 @@ print_several_modifications(checks)
 print("")
 
 # Write Output to file
-print(data.output_data)
 data.remove_output()
-print(data.output_data)
 with open(data.output_file, 'w') as file:
 	File_writer = csv.writer(file, delimiter=rules.delimiter, quoting=csv.QUOTE_ALL)
 	File_writer.writerows(data.output_data)

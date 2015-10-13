@@ -282,7 +282,7 @@ for a in range(1,len(data.modify_data)):
 					modify_at_least_one_hit_for_modify_row = True
 					if rules.mode == 'modify':
 						data.modify_output(b,a,rules,checks)
-					elif rules.mode == 'delete':
+					elif rules.mode == 'remove':
 						data.register_remove_output(b)
 			else:
 				break

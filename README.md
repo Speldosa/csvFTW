@@ -1,10 +1,10 @@
-# The Name
+# Name
 
 csvFTW
 
 # Version
 
-alpha 0.5 (released 2015-10-XX)
+alpha 0.5 (released 2015-10-13)
 
 # Author
 
@@ -50,7 +50,7 @@ The program will, for each row in the instruction file, first look at all the `v
 
 # Change log
 
-## alpha 0.5 (released 2015-10-XX)
+## alpha 0.5 (released 2015-10-13)
 - Added the mode option so that the program can be run in two different modes: `remove` and `modify`.
 
 ## alpha 0.4 (released 2015-10-05)

@@ -22,10 +22,12 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 					elif data.modify_data[modify_row][modify_column] == rules.empty_designator:
 						if data.input_data[input_row][a] == "":
 							return(True)
+				# If cell is empty, return a match.
 				else:
 					return(True)
 		return(False)
 	elif check_column_markup == 'i@':
+		# If cell is empty, return a match.
 		if not data.modify_data[modify_row][modify_column]:
 			return(True)
 		currentCell = data.modify_data[modify_row][modify_column]
@@ -54,6 +56,27 @@ def check_for_match(modify_row,modify_column,check_column_name,check_column_mark
 								except:
 									# To-do: Catch this error in the check construct.
 									pass
+						elif data.modify_data[modify_row][modify_column] == rules.empty_designator:
+							if data.input_data[input_row][a] == "":
+								return(True)
+		return(False)
+	elif check_column_markup == 'w@':
+		# If cell is empty, return a match.
+		if not data.modify_data[modify_row][modify_column]:
+			return(True)
+		currentCell = data.modify_data[modify_row][modify_column]
+		# If the + designator is found anywhere in the current cell, create a vector with separate elements of what's divided by the designator.
+		if '+' in currentCell:
+			currentCellElements = currentCell.split("+")
+		# If no designator is found anywhere in the current cell, create a vector with just one element, constitued by the contents of the current cell. 
+		else:
+			currentCellElements = [currentCell]
+		for a in range(0,len(data.input_data_header_columns)):
+			if check_column_name == data.input_data_header_columns[a]:
+				for b in range(0,len(currentCellElements)):
+					if currentCellElements[b]:
+						if currentCellElements[b] == data.input_data[input_row][a]:
+							return(True)
 						elif data.modify_data[modify_row][modify_column] == rules.empty_designator:
 							if data.input_data[input_row][a] == "":
 								return(True)
@@ -171,7 +194,8 @@ class Data:
 		# Create variables
 		self.modify_data_vertabim_columns = list_key_columns(self.modify_data_header_columns, "v@")
 		self.modify_data_integer_columns = list_key_columns(self.modify_data_header_columns, "i@")
-		self.modify_data_check_columns = self.modify_data_vertabim_columns + self.modify_data_integer_columns
+		self.modify_data_words_columns = list_key_columns(self.modify_data_header_columns, "w@")
+		self.modify_data_check_columns = self.modify_data_vertabim_columns + self.modify_data_integer_columns + self.modify_data_words_columns
 		self.modify_data_change_columns = list_key_columns(self.modify_data_header_columns, "m@")
 		self.modify_data_marked_columns = self.modify_data_check_columns + self.modify_data_change_columns
 		self.modify_data_all_columns = create_number_list(self.modify_data_header_columns)

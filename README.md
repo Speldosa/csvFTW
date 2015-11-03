@@ -35,20 +35,24 @@ with all the files you want to use placed in the same directory as `csvFTW.py`. 
 In your instruction file, you mark the columns that you want the program to look at by a letter and then the `@` symbol, followed by the column name in the input file. Currently, there are two commands that you can useto define checks:
 
 - `v@` - **Vertabim check:** Makes the program check to see if the cells in this column match with the cells in the input file.
+- `w@` - **Words check:** Makes the program check to see if the cells in this column match with the cells in the input file. This markup uses a special markup to look for different vertabim matches in one fell swoop. Elements are separated by `+`, like so: `x+y`. Here, both `x` and `y` would be considered matches if it shows up in the input data. Notice however that plusses cannot be part of the content being matched in the input data.
 - `i@` - **Integer check:** Makes the program check to see if the cells in this column match with the cells in the input file. This markup only deals with integers and a special syntax can be used to look for several of them in one fell swoop. First, elements can be separated by commas, like so: `x,y`. Further, each element can be a range between two numbers (with the smaller one specified first). For example, `1-5` would be the same thing as writing `1,2,3,4,5`. An example of a integer check could then be `1-3,5-8,10` which would match with all numbers between 1 and 10 except for 4 and 9. In addition, using a `*` (not applicable in the range option) means that any number passes.
 
 Depending on the mode the program is run in, it will behave in different ways:
 
 ## Remove mode
 
-In this mode, the program will, for each row in the instruction file, look at all the `v@` and `i@` tags. If all the cells in a row of the instruction file where the column name is marked with `v@` or `i@` match with all the cells for those column names in one or several rows of the input data, the program will remove these rows from the input data.
+In this mode, the program will, for each row in the instruction file, look at all the `v@`, `w@`, and `i@` tags. If all the cells in a row of the instruction file where the column name is marked with `v@`, `w@`, or `i@` match with all the cells for those column names in one or several rows of the input data, the program will remove these rows from the input data.
 
 ## Modify mode
 
-The program will, for each row in the instruction file, first look at all the `v@` and `i@` tags. If all the cells in a row of the instruction file where the column name is marked with `v@` or `i@` match with all the cells for those column names in one or several rows of the input data, the program will look in the instruction file again for columns tagged with `m@` (which stands for `modify`). For all these, the content of the cells in the instruction file will replace whatever is present in the input file for the output data, or add a new column with the name specified after the `@` sign.
+The program will, for each row in the instruction file, first look at all the `v@`, `w@`, and `i@` tags. If all the cells in a row of the instruction file where the column name is marked with `v@`, `w@`, or `i@` match with all the cells for those column names in one or several rows of the input data, the program will look in the instruction file again for columns tagged with `m@` (which stands for `modify`). For all these, the content of the cells in the instruction file will replace whatever is present in the input file for the output data, or add a new column with the name specified after the `@` sign.
 
 
 # Change log
+
+## alpha 0.6 (released 2015-11-03)
+- Added a new markup: `w@` (words).
 
 ## alpha 0.5 (released 2015-10-13)
 - Added the mode option so that the program can be run in two different modes: `remove` and `modify`.

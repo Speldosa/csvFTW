@@ -4,7 +4,7 @@ csvFTW
 
 # Version
 
-alpha 0.5 (released 2015-10-13)
+alpha 0.6 (released 2015-11-03)
 
 # Author
 

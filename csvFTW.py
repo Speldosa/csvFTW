@@ -109,7 +109,7 @@ def print_ignored_columns_message(data):
 
 def print_startup_message(data,rules):
 	print("**********************************")
-	print("*** csvFTW, alpha version 0.5. ***")
+	print("*** csvFTW, alpha version 0.6. ***")
 	print("**********************************")
 	print("Input file: " + data.input_file)
 	print("Instruction file: " + data.modify_file)
